@@ -1,0 +1,16 @@
+services:
+ heliwatch:
+    container_name: heliwatch
+    command: python main.py
+    environment:
+      - LAT=${FEEDER_LAT}
+      - LON=${FEEDER_LON}
+      - RAD=${HELIWATCH_RAD_NAUTICAL_MILES}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./heliwatch:/data
+    ports:
+      - 8003:8003
+    restart: unless-stopped
