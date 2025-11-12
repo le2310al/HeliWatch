@@ -12,17 +12,17 @@ SQUAWKS = {}
 ICAO = []
 
 with open('squawks.csv', mode='r') as file:
-    csv = csv.DictReader(file)
-    for row in csv:
+    squawks_csv = csv.DictReader(file)
+    for row in squawks_csv:
         SQUAWKS.update({row.get('squawk'): row.get('function')})
 
 with open('icao.csv', mode='r') as file:
-    csv = csv.DictReader(file)
-    for row in csv:
+    icao_csv = csv.DictReader(file)
+    for row in icao_csv:
         ICAO.append(row)
 
 # ADSBFI API provides the HEX code of the aircrafts within a certain radius of the given coordinates
-ADSBFI = "https://opendata.adsb.fi/api/v2/lat/" + LAT + "/lon/" + LON + "/dist/" + DST
+ADSBFI = "https://opendata.adsb.fi/api/v2/lat/" + str(LAT) + "/lon/" + str(LON) + "/dist/" + str(DST)
 HEX = ""
 
 # HEXDB API provides information on the owner (among other things) of the queried aircraft (in this case a heli)
@@ -68,5 +68,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    print(ADSBFI)
     httpd = HTTPServer(('', 8003), SimpleHTTPRequestHandler)
     httpd.serve_forever()
